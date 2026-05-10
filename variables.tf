@@ -1,19 +1,17 @@
-variable "name" {}
-variable "resource_group" {}
-variable "location" {}
-variable "admin_user" {}
-variable "admin_pass" {}
+variable "db" {}
 
-variable "vnet" {}
-variable "subnet" {}
+# db = {
+#     name = 
+#     resource_group =
+#     location =
+#     subnet_id
+# }
 
-variable "backup_retention_days" {default = 30 }
-variable "geo_redundant_backup_enabled" {default = false }
-variable "public_network_access" {default = "Disabled" }
-
-variable "sku_name" {default = "GP_Standard_D2ds_v4"}
-
-variable "mysql_version" {default = "8.0.21" }
-variable "tags" {default = null }
-variable "zone" {default = null }
-
+# Defaults
+variable "backup_retention_days_default" {default = 30 }
+variable "replica_suffix_default" {default = "-ro" }
+variable "geo_redundant_backup_enabled_default" {default = false }
+variable "public_network_access_default" {default = "Disabled" }
+variable "sku_name_default" {default = "GP_Standard_D2ds_v4"}
+variable "zone_default" {default = null }
+variable "mysql_version_default" {default = "8.0.21" }
