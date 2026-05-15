@@ -3,7 +3,7 @@ resource "azurerm_mysql_flexible_server" "primary" {
   resource_group_name    = var.db.resource_group
   location               = var.db.location
   administrator_login    = lookup(var.db,"admin_user",null)
-  administrator_password = lookup(var.db,"admin_pass",null)
+
   administrator_password_wo = lookup(var.db,"admin_pass_wo",null)
   administrator_password_wo_version = lookup(var.db,"admin_pass_wo_version",null)
 
