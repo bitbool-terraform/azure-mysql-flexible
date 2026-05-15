@@ -4,6 +4,9 @@ resource "azurerm_mysql_flexible_server" "primary" {
   location               = var.db.location
   administrator_login    = lookup(var.db,"admin_user",null)
   administrator_password = lookup(var.db,"admin_pass",null)
+  administrator_password_wo = lookup(var.db,"admin_pass_wo",null)
+  administrator_password_wo_version = lookup(var.db,"admin_pass_wo_version",null)
+
   backup_retention_days  = lookup(var.db,"backup_retention_days", var.backup_retention_days_default)
 
   geo_redundant_backup_enabled = lookup(var.db,"geo_redundant_backup_enabled", var.geo_redundant_backup_enabled_default)
@@ -31,6 +34,8 @@ resource "azurerm_mysql_flexible_server" "primary" {
     ignore_changes = [
       administrator_login,
       administrator_password,
+      administrator_password_wo,
+      administrator_password_wo_version,
     ]
   }
 }
