@@ -27,6 +27,12 @@ resource "azurerm_mysql_flexible_server" "primary" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      administrator_login,
+      administrator_password,
+    ]
+  }
 }
 
 
