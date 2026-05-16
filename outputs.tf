@@ -17,3 +17,7 @@ output "primary_id" {
 output "replica_id" {
   value = try(azurerm_mysql_flexible_server.replica[0].id,null)
 }
+
+output "private_zone_fqdn" {
+  value = format("%s.%s",azurerm_mysql_flexible_server.primary.name,azurerm_private_dns_zone.main.name)
+}
