@@ -1,5 +1,5 @@
 resource "azurerm_private_dns_zone" "main" {
-  name                = format("%s.private.mysql.database.azure.com",var.db.name)
+  name                = lookup(var.db,"private_dns_zone_name","privatelink.mysql.database.azure.com")
   resource_group_name = var.db.resource_group
   tags                = lookup(var.db,"tags_dns",{})
 }
