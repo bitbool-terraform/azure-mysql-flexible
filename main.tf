@@ -14,7 +14,7 @@ resource "azurerm_mysql_flexible_server" "primary" {
   public_network_access  = lookup(var.db,"public_network_access", var.public_network_access_default)
 
   delegated_subnet_id    = var.db.subnet_id
-  private_dns_zone_id    = azurerm_private_dns_zone.main.id
+  private_dns_zone_id    = lookup(var.db,"create_private_dns_zone",var.create_private_dns_zone_default) ? azurerm_private_dns_zone.main[0].id : lookup(var.db,"private_dns_zone_id",null)
 
   sku_name               = lookup(var.db,"sku_name", var.sku_name_default)
   zone                   = lookup(var.db,"zone", var.zone_default)
@@ -27,6 +27,14 @@ resource "azurerm_mysql_flexible_server" "primary" {
     content {
       type         = "UserAssigned"
       identity_ids = var.db.identity_ids
+    }
+  }
+
+  dynamic "high_availability" {
+    for_each = lookup(var.db,"high_availability",null) == null ? [] : [var.db.high_availability]
+    content {
+      mode = var.db.high_availability.mode
+      standby_availability_zone = var.db.high_availability.standby_availability_zone
     }
   }
 
@@ -49,12 +57,13 @@ resource "azurerm_mysql_flexible_server" "replica" {
   location            = var.db.location
   zone                = lookup(var.db.replica,"zone", var.zone_default)
 
-  create_mode      = "Replica"
+  create_mode      = lookup(var.db.replica,"create_mode", null)
   source_server_id = azurerm_mysql_flexible_server.primary.id
 
   sku_name = try(var.db.replica.sku_name, lookup(var.db,"sku_name", var.sku_name_default))
   version  = lookup(var.db,"mysql_version", var.mysql_version_default)
 
+  geo_redundant_backup_enabled = lookup(var.db.replica,"geo_redundant_backup_enabled", var.geo_redundant_backup_enabled_default)
   # dynamic "storage" {
   #   for_each = try(var.replica.storage, null) == null ? [] : [var.replica.storage]
   #   content {

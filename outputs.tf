@@ -19,5 +19,5 @@ output "replica_id" {
 }
 
 output "private_zone_fqdn" {
-  value = format("%s.%s",azurerm_mysql_flexible_server.primary.name,azurerm_private_dns_zone.main.name)
+  value = try(format("%s.%s",azurerm_mysql_flexible_server.primary.name,azurerm_private_dns_zone.main[0].name),null)
 }
