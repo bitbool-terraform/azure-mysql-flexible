@@ -5,6 +5,7 @@
 
 | Version    | Changes |
 | -------- | ------- |
+| v2.0.7  | Configuration bug fix. |
 | v2.0.6  | Various patches/fixes. |
 | v2.0.5  | Added private fqdn output. |
 | v2.0.4  | Added parameterization to private dns zone name. |
